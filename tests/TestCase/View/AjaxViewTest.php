@@ -33,6 +33,7 @@ class AjaxViewTest extends TestCase {
 		parent::setUp();
 
 		Configure::write('App.namespace', 'TestApp');
+		Configure::write('debug', false);
 
 		$this->Ajax = new AjaxView();
 	}
@@ -75,7 +76,7 @@ class AjaxViewTest extends TestCase {
 
 		$response = $View->getResponse();
 		$this->assertSame('application/json', $response->getType());
-		$expected = ['error' => null, 'success' => null, 'content' => 'My Ajax Index Test ctp' . PHP_EOL, 'items' => $items];
+		$expected = ['error' => null, 'success' => null, 'content' => 'My Ajax Index Test ctp' . "\n", 'items' => $items];
 		$expected = json_encode($expected);
 		$this->assertTextEquals($expected, $result);
 	}
@@ -140,7 +141,7 @@ class AjaxViewTest extends TestCase {
 
 		$response = $View->getResponse();
 		$this->assertSame('application/json', $response->getType());
-		$expected = ['error' => null, 'success' => null, 'content' => 'My Index Test ctp' . PHP_EOL];
+		$expected = ['error' => null, 'success' => null, 'content' => 'My Index Test ctp' . "\n"];
 		$expected = json_encode($expected);
 		$this->assertTextEquals($expected, $result);
 	}

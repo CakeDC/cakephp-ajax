@@ -18,7 +18,8 @@
 	},
 	"require-dev": {
 		"dereuromark/cakephp-tools": "^2.0.0",
-		"fig-r/psr2r-sniffer": "dev-master"
+		"fig-r/psr2r-sniffer": "dev-master",
+		"phpunit/phpunit": "^8.5"
 	},
 	"autoload": {
 		"psr-4": {
@@ -38,7 +39,7 @@
 	},
 	"prefer-stable": true,
 	"scripts": {
-		"test": "php phpunit.phar",
+		"test": "php phpunit",
 		"test-setup": "[ ! -f phpunit.phar ] && wget https://phar.phpunit.de/phpunit-8.5.1.phar && mv phpunit-8.5.1.phar phpunit.phar || true",
 		"test-coverage": "php phpunit.phar --log-junit tmp/coverage/unitreport.xml --coverage-html tmp/coverage --coverage-clover tmp/coverage/coverage.xml",
 		"stan": "phpstan analyse -c tests/phpstan.neon -l 7 src/",

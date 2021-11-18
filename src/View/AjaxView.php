@@ -3,10 +3,12 @@
 namespace Ajax\View;
 
 use App\View\AppView;
+use Cake\Core\Configure;
 use Cake\Event\EventManager;
 use Cake\Http\Response;
 use Cake\Http\ServerRequest;
 use Cake\Utility\Hash;
+use RuntimeException;
 
 /**
  * A view to handle AJAX requests.
@@ -134,7 +136,22 @@ class AjaxView extends AppView {
 	 * @return string The serialized data.
 	 */
 	protected function _serialize(array $dataToSerialize = []) {
-		return JsonEncoder::encode($dataToSerialize);
+        $jsonOptions = $this->getConfig('jsonOptions');
+        if ($jsonOptions === null) {
+            $jsonOptions = self::JSON_OPTIONS;
+        } elseif ($jsonOptions === false) {
+            $jsonOptions = 0;
+        }
+
+        if (Configure::read('debug')) {
+            $jsonOptions |= JSON_PRETTY_PRINT;
+        }
+
+        if (defined('JSON_THROW_ON_ERROR')) {
+            $jsonOptions |= JSON_THROW_ON_ERROR;
+        }
+
+		return JsonEncoder::encode($dataToSerialize, $jsonOptions);
 	}
 
 	/**
